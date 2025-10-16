@@ -1,26 +1,31 @@
-// server.js (Updated)
-
+// 1. Import required packages
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const connectDB = require('./config/db'); // इसे अब इस्तेमाल करें
-const admissionRoutes = require('./routes/admissionRoutes'); // इसे भी इस्तेमाल करें
+const connectDB = require('./config/db');
+const admissionRoutes = require('./routes/admissionRoutes');
 
+// 2. Load .env file and connect to the database
 dotenv.config();
-connectDB(); // Connect to database.
+connectDB();
 
+// 3. Create Express server
 const app = express();
-app.use(cors());
-app.use(express.json());
 
+// 4. Use Middlewares
+app.use(cors()); // This allows the frontend and backend to communicate
+app.use(express.json()); // This helps in parsing JSON data from requests
+
+// 5. A test route (to check if the server is running)
 app.get('/', (req, res) => {
-    res.send('our backend ssever is up and running.!');
+    res.send('Our backend server is up and running!');
 });
 
-// connect API root to sever. 
+// 6. Connect the main API route to the server
 app.use('/api/admissions', admissionRoutes);
 
+// 7. Start the server on a port
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`सर्वर पोर्ट ${PORT} पर शुरू हो गया है।`);
+    console.log(`Server has started on port ${PORT}.`);
 });
