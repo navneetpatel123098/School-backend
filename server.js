@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const admissionRoutes = require('./routes/admissionRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 // 2. Load .env file and connect to the database
 dotenv.config();
@@ -23,6 +24,7 @@ app.get('/', (req, res) => {
 
 // 6. Connect the main API route to the server
 app.use('/api/admissions', admissionRoutes);
+app.use('/api/auth', authRoutes);
 
 // 7. Start the server on a port
 const PORT = process.env.PORT || 5000;

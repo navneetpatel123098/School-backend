@@ -1,25 +1,34 @@
 // controllers/admissionController.js
 const Admission = require('../models/admissionModel');
 
-// logic for submitting new admission fotm.
+// 1. नया एडमिशन फॉर्म सबमिट करने का लॉजिक
 const submitAdmission = async (req, res) => {
     try {
-        // data fron the frontend.
         const formData = req.body;
-
-        // save the data to Database
         const newAdmission = await Admission.create(formData);
-
-        // send the success message to the frontend
         res.status(201).json({ 
             success: true, 
             message: 'Form submitted successfully!',
             data: newAdmission 
         });
     } catch (error) {
-        // send an error if there is a mistake
         res.status(400).json({ success: false, message: error.message });
     }
 };
 
-module.exports = { submitAdmission };
+// 2. सभी एडमिशन का डेटा देखने का लॉजिक (टीचर के लिए)
+const getAdmissions = async (req, res) => {
+    try {
+        const admissions = await Admission.find().sort({ createdAt: -1 }); // सबसे नया पहले
+        res.status(200).json({
+            success: true,
+            count: admissions.length,
+            data: admissions
+        });
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message });
+    }
+};
+
+// दोनों को एक्सपोर्ट करें
+module.exports = { submitAdmission, getAdmissions };

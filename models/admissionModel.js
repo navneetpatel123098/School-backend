@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 
 const admissionSchema = new mongoose.Schema({
+    loginInput: { type: String }, // यह भी सेव करें
     studentFirstName: { type: String, required: true },
     studentLastName: { type: String, required: true },
     dob: { type: Date },
@@ -11,14 +12,10 @@ const admissionSchema = new mongoose.Schema({
     motherName: { type: String, required: true },
     motherAadhar: { type: String },
     address: { type: String, required: true },
-
-    // --- यह फील्ड्स जोड़े गए हैं ---
     fatherPan: { type: String },
     district: { type: String },
     pincode: { type: String },
     language: { type: String },
-    // ---
-
     admissionClass: { type: String, required: true },
     status: { type: String, default: 'Submitted' },
 }, { timestamps: true });
